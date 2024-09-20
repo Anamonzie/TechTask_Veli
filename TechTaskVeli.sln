@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechTaskVeli", "TechTaskVeli\TechTaskVeli.csproj", "{8FD315E6-4D1C-4FC7-8F6B-84F9A6B9438E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechTaskVeli.Tests", "TechTaskVeli.Tests\TechTaskVeli.Tests.csproj", "{021640C5-365A-420F-845D-926F0E65028F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FD315E6-4D1C-4FC7-8F6B-84F9A6B9438E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FD315E6-4D1C-4FC7-8F6B-84F9A6B9438E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FD315E6-4D1C-4FC7-8F6B-84F9A6B9438E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FD315E6-4D1C-4FC7-8F6B-84F9A6B9438E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021640C5-365A-420F-845D-926F0E65028F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021640C5-365A-420F-845D-926F0E65028F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021640C5-365A-420F-845D-926F0E65028F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021640C5-365A-420F-845D-926F0E65028F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53ED3AE7-403C-4DD6-A957-409F14ABB4FB}
+	EndGlobalSection
+EndGlobal
