@@ -11,10 +11,16 @@ namespace TechTaskVeli
         {
             this.page = page;
         }
-        
+
         private ILocator BackToSchoolLink => page
             .GetByRole(AriaRole.Link)
             .Filter(new() { HasTextRegex = new Regex("Back to School") });
+
+        //private ILocator BackpackButton => page
+        //    .Locator("a.title[href*='/zurgchantebi/']");
+
+
+        //private ILocator PopupCloseButton => page.Locator("interactive-close-button");
 
         public async Task GoToHomePageAsync()
         {
@@ -32,11 +38,24 @@ namespace TechTaskVeli
         {
             await BackToSchoolLink.Nth(1).ClickAsync();
         }
+        //public ILocator GetPopupCloseButton()
+        //{            
+        //    return PopupCloseButton;
+        //}
+
+        //public async Task ClickOnBackpack()
+        //{
+        //    await BackpackButton.ClickAsync();
+        //}
+
+        //public async Task ClosePopup()
+        //{
+        //    await PopupCloseButton.ClickAsync();
+        //}
 
         public string GetPageUrl()
         {
             return page.Url;
         }
-
     }
 }

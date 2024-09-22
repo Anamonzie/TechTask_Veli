@@ -19,7 +19,7 @@ public class HomePageTestsV2 : PageTest
 
         await Expect(Page).ToHaveTitleAsync(new Regex("Veli Store"));
     }
-  
+
     [Test]
     public async Task GetStartedLink()
     {
@@ -27,5 +27,5 @@ public class HomePageTestsV2 : PageTest
         await homepage.ClickBackToSchoolLinkAsync();
 
         await Expect(Page).ToHaveURLAsync(new Regex(".*back-to-school.*"));
-    }    
+    }
 }
