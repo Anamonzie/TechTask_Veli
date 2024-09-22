@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         browser: [chromium, firefox, webkit]  # Parallelizing across different browsers
-        playwright-version: latest     # Choose a specific version or latest
+        playwright-version: [1.44.0]     # Choose a specific version or latest
 
     steps:
     # Step 1: Checkout the code
