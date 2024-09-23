@@ -31,6 +31,8 @@ public class HomePageTestsV2 : PageTest
         await homepage.GoToHomePageAsync();
         await homepage.ClickBackToSchoolLinkAsync();
 
+        await Task.Delay(1000); // Adjust the delay as necessary
+
         await Expect(Page).ToHaveURLAsync(new Regex(".*back-to-school.*"));
     }
 }
