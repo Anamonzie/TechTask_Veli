@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         browser: [chromium, firefox, webkit]  # Parallelizing across different browsers
-        playwright-version: [1.44.0]     # Choose a specific version or latest
+        playwright-version: [1.44.0] 
 
     steps:
     # Step 1: Checkout the code
@@ -49,10 +49,22 @@ jobs:
       env:
         BROWSER: ${{ matrix.browser }}
         
-    # Step 7: Upload Test Results (Optional)
-    - name: Upload Test Results
+    # Step 7: Upload Test Results 
+    - name: Test marketplace action
+      uses: simple-elf/allure-report-action@master
       if: always()
-      uses: actions/upload-artifact@v4
+      id: allure-report
       with:
-        name: test-results-${{ matrix.browser }}
-        path: TestResults/*
+        allure_results: build/allure-results
+        gh_pages: gh-pages
+        allure_report: allure-report
+        allure_history: allure-history
+
+    # Step 7: Finally you need to publish on GitHub Pages
+    - name: Deploy report to Github Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v2
+      env:
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: allure-history
