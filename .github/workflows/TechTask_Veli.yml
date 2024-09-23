@@ -39,29 +39,29 @@ jobs:
     - name: Install Playwright
       run: npm install @playwright/test
       
-    # Step 4: Install all required libraries using Playwright script
+    # Step 5: Install all required libraries using Playwright script
     - name: Install Playwright Dependencies
       run: npx playwright install-deps
 
-    # Step 4: Build & Install   
+    # Step 6: Build & Install   
     - name: Build & Install
       run: dotnet build
 
-    # Step 6: Install Playwright Browsers
+    # Step 7: Install Playwright Browsers
     - name: Install Playwright Browsers
       run: npx playwright install
 
-    # Step 7: Build the project
+    # Step 8: Build the project
     - name: Build the project
       run: dotnet build --configuration Release --no-restore --verbosity detailed
 
-    # Step 8: Run Playwright Tests
+    # Step 9: Run Playwright Tests
     - name: Run Playwright Tests
       run: dotnet test TechTaskVeli.Tests/TechTaskVeli.Tests.csproj --configuration Release --no-build --verbosity normal
       env:
         BROWSER: ${{ matrix.browser }}
     
-    # Step 9: Load test report history
+    # Step 10: Load test report history
     - name: Load test report history
       uses: actions/checkout@v4
       if: always()
@@ -70,7 +70,16 @@ jobs:
         ref: gh-pages
         path: gh-pages
 
-    # Step 10: Build test report
+    # Step 11: Fetch and merge remote changes
+    - name: Fetch and merge remote changes
+      run: |
+        git fetch origin gh-pages
+        git checkout gh-pages
+        git merge origin/gh-pages || git merge --abort
+        git add -A
+        git commit -m "Merging remote changes" || echo "No changes to commit"
+
+    # Step 12: Build test report
     - name: Build test report
       uses: simple-elf/allure-report-action@v1.9
       if: always()
@@ -79,7 +88,7 @@ jobs:
         allure_history: allure-history
         allure_results: build/allure-results
 
-    # Step 11: Publish test report
+    # Step 13: Publish test report
     - name: Publish test report
       uses: peaceiris/actions-gh-pages@v4
       if: always()

@@ -5,7 +5,6 @@ using Allure.NUnit;
 namespace PlaywrightTests;
 
 [AllureNUnit]
-[AllureParentSuite("Tests - Id")]
 public class HomePageTestsV2 : PageTest
 {
     private HomePage homepage;
