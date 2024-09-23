@@ -79,9 +79,14 @@ jobs:
       with:
         ref: gh-pages
 
+    # Step 11: Ensure allure-history directory exists
+    - name: Ensure allure-history directory exists
+      run: |
+        mkdir -p allure-history
+
     # Step 12: List files in allure-history
     - name: List files in allure-history
-      run: ls -la allure-history
+      run: ls -la allure-history || echo "allure-history directory not found."
 
     # Step 13: Pull the latest changes from gh-pages
     - name: Pull latest gh-pages changes
