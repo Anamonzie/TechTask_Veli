@@ -38,6 +38,7 @@ namespace TechTaskVeli
         {
             await BackToSchoolLink.Nth(1).ClickAsync();
         }
+
         //public ILocator GetPopupCloseButton()
         //{            
         //    return PopupCloseButton;
