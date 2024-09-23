@@ -84,6 +84,11 @@ jobs:
       run: |
         mkdir -p allure-history
 
+    # Step 13: Copy Allure results to allure-history
+    - name: Copy Allure results
+      run: |
+        cp -r build/allure-results/* allure-history/ || echo "No allure results to copy."
+
     # Step 12: List files in allure-history
     - name: List files in allure-history
       run: ls -la allure-history || echo "allure-history directory not found."
