@@ -10,24 +10,24 @@ on:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     strategy:
       matrix:
         browser: [chromium, firefox, webkit]  # Parallelizing across different browsers
         playwright-version: [1.44.0] 
 
-    steps:
+    steps:    
+    # Step 2: Checkout the code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
     # Step 1: Set up JDK
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
         distribution: zulu
         java-version: 21
-
-    # Step 2: Checkout the code
-    - name: Checkout repository
-      uses: actions/checkout@v4
 
     # Step 3: Set up .NET
     - name: Set up .NET Core
@@ -61,50 +61,41 @@ jobs:
       env:
         BROWSER: ${{ matrix.browser }}
     
-    # Step 10: Ensure Allure results exist
-    - name: Check for Allure results
-      run: |
-        if [ -d build/allure-results ]; then
-          echo "Allure results found."
-        else
-          echo "Allure results directory not found!"
-          mkdir -p build/allure-results  # Create an empty directory if not found
-        fi
-
-    # Step 11: Load test report history
-    - name: Load test report history
-      uses: actions/checkout@v4
-      if: always()
-      continue-on-error: true
-      with:
-        ref: gh-pages
-
-    # Step 11: Ensure allure-history directory exists
-    - name: Ensure allure-history directory exists
-      run: |
-        mkdir -p allure-history
-
-    # Step 13: Copy Allure results to allure-history
-    - name: Copy Allure results
-      run: |
-        cp -r build/allure-results/* allure-history/ || echo "No allure results to copy."
-
-    # Step 12: List files in allure-history
-    - name: List files in allure-history
-      run: ls -la allure-history || echo "allure-history directory not found."
-
-    # Step 13: Pull the latest changes from gh-pages
-    - name: Pull latest gh-pages changes
-      run: |
-        git checkout gh-pages
-        git pull origin gh-pages || echo "No changes to pull."
-
-    # Step 14: Commit and publish test report
-    - name: Publish test report
-      uses: peaceiris/actions-gh-pages@v4
-      if: always()
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: allure-history
-
+report:
+    needs: test
+  
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4.1.0
+        with:
+          name: allure-results
+          path: ./allure-results
+  
+      - name: Get Allure history (optional)
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+  
+      - name: Generate report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        id: allure-report
+        with:
+          allure_results: allure-results
+          gh_pages: allure-report
+          allure_history: allure-history
+          keep_reports: 20
+  
+      - name: Deploy report to Github Pages
+        if: always()
+        # uses: peaceiris/actions-github-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-report
