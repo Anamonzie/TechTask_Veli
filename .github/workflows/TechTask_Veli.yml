@@ -70,25 +70,28 @@ jobs:
         ref: gh-pages
         path: gh-pages
 
-    # Step 11: Fetch and merge remote changes
-    - name: Fetch and merge remote changes
+    # Step 10: Ensure Allure results exist
+    - name: Check for Allure results
+      run: |
+        if [ -d build/allure-results ]; then
+          echo "Allure results found."
+        else
+          echo "Allure results directory not found!"
+          exit 1
+        fi
+
+    # Step 11: List files in allure-history
+    - name: List files in allure-history
+      run: ls -la allure-history
+
+    # Step 12: Pull the latest changes from gh-pages
+    - name: Pull latest gh-pages changes
       run: |
         git fetch origin gh-pages
         git checkout gh-pages
-        git merge origin/gh-pages || git merge --abort
-        git add -A
-        git commit -m "Merging remote changes" || echo "No changes to commit"
+        git pull origin gh-pages
 
-    # Step 12: Build test report
-    - name: Build test report
-      uses: simple-elf/allure-report-action@v1.9
-      if: always()
-      with:
-        gh_pages: gh-pages
-        allure_history: allure-history
-        allure_results: build/allure-results
-
-    # Step 13: Publish test report
+    # Step 13: Commit and publish test report
     - name: Publish test report
       uses: peaceiris/actions-gh-pages@v4
       if: always()
