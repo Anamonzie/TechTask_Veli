@@ -61,15 +61,6 @@ jobs:
       env:
         BROWSER: ${{ matrix.browser }}
     
-    # Step 10: Load test report history
-    - name: Load test report history
-      uses: actions/checkout@v4
-      if: always()
-      continue-on-error: true
-      with:
-        ref: gh-pages
-        path: gh-pages
-
     # Step 10: Ensure Allure results exist
     - name: Check for Allure results
       run: |
@@ -80,6 +71,14 @@ jobs:
           exit 1
         fi
 
+    # Step 10: Load test report history
+    - name: Load test report history
+      uses: actions/checkout@v4
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+
     # Step 11: List files in allure-history
     - name: List files in allure-history
       run: ls -la allure-history
@@ -87,9 +86,8 @@ jobs:
     # Step 12: Pull the latest changes from gh-pages
     - name: Pull latest gh-pages changes
       run: |
-        git fetch origin gh-pages
         git checkout gh-pages
-        git pull origin gh-pages
+        git pull origin gh-pages || echo "No changes to pull."
 
     # Step 13: Commit and publish test report
     - name: Publish test report
