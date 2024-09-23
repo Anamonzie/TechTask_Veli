@@ -1,7 +1,11 @@
 ﻿using TechTaskVeli;
+using Allure.NUnit.Attributes;
+using Allure.NUnit;
 
 namespace PlaywrightTests;
 
+[AllureNUnit]
+[AllureParentSuite("Tests - Id")]
 public class HomePageTestsV2 : PageTest
 {
     private HomePage homepage;
@@ -13,6 +17,7 @@ public class HomePageTestsV2 : PageTest
     }
 
     [Test]
+    [AllureName("HasTitle")]
     public async Task HasTitle()
     {
         await homepage.GoToHomePageAsync();
@@ -21,6 +26,7 @@ public class HomePageTestsV2 : PageTest
     }
 
     [Test]
+    [AllureName("GetStartedLink")]
     public async Task GetStartedLink()
     {
         await homepage.GoToHomePageAsync();
