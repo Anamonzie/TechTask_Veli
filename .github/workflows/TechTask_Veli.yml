@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        browser: [chromium, firefox, webkit]  # Parallelizing across different browsers
+        browser: [chromium, firefox, webkit]  
         playwright-version: [1.44.0] 
 
     steps:
@@ -33,7 +33,7 @@ jobs:
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'  # your .NET version
+        dotnet-version: '8.0.x'  
 
     # Step 4: Install Playwright package
     - name: Install Playwright
@@ -99,7 +99,7 @@ jobs:
         git checkout gh-pages
         git pull origin gh-pages || echo "No changes to pull."
         
-    # Step 13: Commit and publish test report
+    # Step 16: Commit and publish test report
     - name: Publish test report
       uses: peaceiris/actions-gh-pages@v4
       if: always()
